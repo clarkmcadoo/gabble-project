@@ -12,6 +12,14 @@ entryRoutes.get("/signup", function(req, res){
     res.render("signup");
 })
 
+entryRoutes.get("/login", function(req, res){
+    res.render("login");
+})
+
+entryRoutes.get("/home", function(req, res){
+    res.render("home");
+})
+
 
 // app.post("/addTodo", function(require, response) {
 //   //selector for the add task input box value
@@ -34,6 +42,10 @@ entryRoutes.post("/newUser", function(req, res){
     .catch(function(err){res.status(500).send(err);});
 
     res.redirect("/");
+})
+
+entryRoutes.post("/login", function(req, res){
+    res.redirect("home");
 })
 
 
