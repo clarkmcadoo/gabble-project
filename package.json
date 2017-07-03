@@ -1,0 +1,30 @@
+{
+  "name": "gabble",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clarkmcadoo/gabble-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clarkmcadoo/gabble-project/issues"
+  },
+  "homepage": "https://github.com/clarkmcadoo/gabble-project#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "express-validator": "^3.2.0",
+    "morgan": "^1.8.2",
+    "mustache-express": "^1.2.5",
+    "pg": "^6.4.0",
+    "sequelize": "^4.2.1"
+  }
+}
