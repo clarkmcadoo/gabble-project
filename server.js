@@ -5,6 +5,7 @@ const port = process.env.PORT || 9999;
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const entryRoutes = require("./routes/entryRoutes");
+const sessionConfig = require("./sessionConfig");
 // const models = require("./models");
 
 app.engine("mustache", mustacheExpress());
