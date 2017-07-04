@@ -1,8 +1,10 @@
 const express = require("express");
 const entryRoutes = express.Router();
 const models = require("../models");
+const sessionConfig = require("../sessionConfig");
+const session = ("../express-session");
 
-
+// entryRoutes.use(session(sessionConfig));
 
 entryRoutes.get("/", function(req, res){
     res.render("index");
@@ -32,7 +34,24 @@ entryRoutes.post("/newUser", function(req, res){
 })
 
 entryRoutes.post("/login", function(req, res){
-    res.redirect("home");
+    if(!req.body || !req.body.username || !req.body.password){
+        return res.redirect("login");
+    }
+
+    var incomingUser = req.body;
+    console.log("incoming user",incomingUser);
+
+    models.user.findOne({where:
+    {username: incomingUser.username}})
+    .then(function (user) {
+        if(user.username === incomingUser.username && user.password === incomingUser.password){
+            return res.redirect("home");
+            // sessionConfig.user = user;  
+        }else{
+            res.redirect("/");
+        }
+})
+
 })
 
 

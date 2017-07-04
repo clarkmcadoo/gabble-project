@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const entryRoutes = require("./routes/entryRoutes");
 const sessionConfig = require("./sessionConfig");
+const session = require("express-session");
 // const models = require("./models");
 
 app.engine("mustache", mustacheExpress());
@@ -15,6 +16,7 @@ app.set("view engine", "mustache");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use("/", express.static("./public"));
+app.use(session(sessionConfig));
 
 app.use("/", entryRoutes);
 
