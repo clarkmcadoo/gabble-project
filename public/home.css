@@ -1,0 +1,15 @@
+body{
+    background-color: lightcyan;
+}
+
+.messagediv{
+    border: 1px solid black;
+    margin: 2px;
+    width: 30%;
+}
+.messagediv h5{
+    margin: 0px;
+}
+.messagediv button{
+    float: right;
+}

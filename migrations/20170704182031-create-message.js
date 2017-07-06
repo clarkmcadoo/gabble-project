@@ -1,7 +1,9 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
+    console.log("sent from the message migration")
     return queryInterface.createTable('messages', {
+      
       id: {
         allowNull: false,
         autoIncrement: true,

@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
   );
 
 message.associate = function(models){
-  messages.belongsTo(models.user, {as: "author", foreignKey: "authorid" });
-}
+  message.belongsTo(models.user, {as: "author", foreignKey: "authorid" });
+};
   return message;
 };

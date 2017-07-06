@@ -1,8 +1,8 @@
 const express = require("express");
 const entryRoutes = express.Router();
 const models = require("../models");
-const sessionConfig = require("../sessionConfig");
-const session = ("../express-session");
+// const sessionConfig = require("../sessionConfig");
+// const session = ("../express-session");
 
 // entryRoutes.use(session(sessionConfig));
 
@@ -19,7 +19,22 @@ entryRoutes.get("/login", function(req, res){
 })
 
 entryRoutes.get("/home", function(req, res){
-    res.render("home");
+  models.message
+    .findAll({
+      include: 
+        {
+          model: models.user,
+          as: "author"
+        }
+    })
+    .then(function(foundMessages) {
+      res.render("home", {messages: foundMessages});
+    });
+
+});
+
+entryRoutes.get("/creategab", (req, res) => {
+    res.render("creategab");
 })
 
 entryRoutes.post("/newUser", function(req, res){
@@ -45,14 +60,26 @@ entryRoutes.post("/login", function(req, res){
     {username: incomingUser.username}})
     .then(function (user) {
         if(user.username === incomingUser.username && user.password === incomingUser.password){
+            req.session.user = user;  
+            console.log(req.session.user);            
             return res.redirect("home");
-            // sessionConfig.user = user;  
         }else{
             res.redirect("/");
         }
 })
+})
+
+entryRoutes.post("/creategab", (req, res) =>{
+    var  newMessage = req.body.gab;
+    var newGab = models.message.build({content: newMessage, authorid: 5});
+    newGab.save().then(function(savedMessage){})
+    .catch(function(err){res.status(500).send(err);});
+
+    res.redirect("home");
 
 })
+
+
 
 
 module.exports = entryRoutes;
