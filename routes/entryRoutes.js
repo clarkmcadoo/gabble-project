@@ -1,6 +1,11 @@
 const express = require("express");
 const entryRoutes = express.Router();
 const models = require("../models");
+const session = require("express-session");
+const sessionConfig = require("../sessionConfig");
+
+entryRoutes.use(session(sessionConfig));
+
 // const sessionConfig = require("../sessionConfig");
 // const session = ("../express-session");
 
@@ -28,7 +33,7 @@ entryRoutes.get("/home", function(req, res){
         }
     })
     .then(function(foundMessages) {
-      res.render("home", {messages: foundMessages});
+      res.render("home", {messages: foundMessages, name: req.session.user.name});
     });
 
 });
@@ -58,9 +63,9 @@ entryRoutes.post("/login", function(req, res){
 
     models.user.findOne({where:
     {username: incomingUser.username}})
-    .then(function (user) {
-        if(user.username === incomingUser.username && user.password === incomingUser.password){
-            req.session.user = user;  
+    .then(function (visitingUser) {
+        if(visitingUser.username === incomingUser.username && visitingUser.password === incomingUser.password){
+            req.session.user = visitingUser;  
             console.log(req.session.user);            
             return res.redirect("home");
         }else{
@@ -71,9 +76,11 @@ entryRoutes.post("/login", function(req, res){
 
 entryRoutes.post("/creategab", (req, res) =>{
     var  newMessage = req.body.gab;
-    var newGab = models.message.build({content: newMessage, authorid: 5});
+    console.log("SESSION user from Post Gab:", session.user);
+    var newGab = models.message.build({content: newMessage, authorid: req.session.user.id});
     newGab.save().then(function(savedMessage){})
     .catch(function(err){res.status(500).send(err);});
+
 
     res.redirect("home");
 

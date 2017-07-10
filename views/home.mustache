@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 </head>
 <body>
     <h1>Gabble Home Page!</h1>
@@ -14,11 +16,12 @@
         <button>Gabble</button>
         <a href="/creategab"><button>Create Gab</button></a>
         <button>Logged in as {{name}}</button>
-        <button>Log Out</button>
-
+       <form> <button>Log Out</button></form>
+    </div>
+    
         {{#messages}}
         <div class="messagediv">        
-        <h5>{{author.username}}</h5><br>{{content}}
+        <h5>{{author.name}}</h5><br>{{content}}
         <button>Like</button>
         </div>
         {{/messages}}

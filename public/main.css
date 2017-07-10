@@ -1,5 +1,29 @@
-body{
-    background-color: red;
+*{
+    font-family: 'Roboto', sans-serif;
+    
+}
+.bodysplash{
+    background-color: #9596af;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+
+}
+.bodysplash h1{
+    font-size: 60px;
+}
+.splashbuttons{
+    font-size: 36px;
+    height: 50px;
+    width: 150px;
+}
+.splashbuttons:hover{
+    background-image: url("http://www.thegadgettechie.com/wp-content/uploads/2016/08/hello-1.jpg");
+    background-size: 150px 50px;
+    color: transparent;
+    
 }
 
 .signupbody{
