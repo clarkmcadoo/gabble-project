@@ -15,7 +15,7 @@ app.set("view engine", "mustache");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
-app.use("/", express.static("./public"));
+app.use("/", express.static("public"));
 app.use(session(sessionConfig));
 
 app.use("/", entryRoutes);

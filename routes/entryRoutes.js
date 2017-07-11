@@ -3,6 +3,8 @@ const entryRoutes = express.Router();
 const models = require("../models");
 const session = require("express-session");
 const sessionConfig = require("../sessionConfig");
+const checkAuth = require("../checkAuth");
+
 
 entryRoutes.use(session(sessionConfig));
 
@@ -23,7 +25,29 @@ entryRoutes.get("/login", function(req, res){
     res.render("login");
 })
 
-entryRoutes.get("/home", function(req, res){
+entryRoutes.get("/gab/:id", checkAuth, (req, res) =>{
+    models.message
+    .findOne({
+        where: {id: req.params.id},
+        include: {
+            model: models.user,
+            as: "author"
+        }
+    }).then(function(specificMessage){
+        var authority = false;
+        // console.log("This is the author:", specificMessage.authorid, req.session.user.id);
+        if (specificMessage.authorid === req.session.user.id){
+            authority = true;
+        }
+        res.render("gab", {messages: specificMessage, name: req.session.user.name, delete: authority})
+    });
+});
+
+
+
+entryRoutes.get("/home", checkAuth, function(req, res){
+  var authority = true;
+    
   models.message
     .findAll({
       include: 
@@ -38,11 +62,17 @@ entryRoutes.get("/home", function(req, res){
 
 });
 
-entryRoutes.get("/creategab", (req, res) => {
+entryRoutes.get("/creategab", checkAuth, (req, res) => {
     res.render("creategab");
 })
 
-entryRoutes.post("/newUser", function(req, res){
+entryRoutes.get("/logoff", (req, res)=> {
+    req.session.destroy();
+    res.redirect("/");
+})
+
+
+entryRoutes.post("/signup", function(req, res){
     var newUser = req.body;
     
     var newUserAccount = models.user.build({name: newUser.displayname, username: newUser.username, password: newUser.password});
@@ -76,7 +106,6 @@ entryRoutes.post("/login", function(req, res){
 
 entryRoutes.post("/creategab", (req, res) =>{
     var  newMessage = req.body.gab;
-    console.log("SESSION user from Post Gab:", session.user);
     var newGab = models.message.build({content: newMessage, authorid: req.session.user.id});
     newGab.save().then(function(savedMessage){})
     .catch(function(err){res.status(500).send(err);});
@@ -86,6 +115,15 @@ entryRoutes.post("/creategab", (req, res) =>{
 
 })
 
+entryRoutes.post("/delete", (req, res)=>{
+    // console.log("this works:",req.body.id);
+
+    models.message.destroy({where:{id: req.body.id}}).then(()=>{
+        return res.redirect("home");
+    }).catch(err=>{
+        res.send("Error");
+    })
+})
 
 
 
