@@ -4,13 +4,22 @@ body{
 .options{
     display: flex;
 }
-.allmessages{
+.messageByUser{
     display: flex;
 }
+.messageByUser a{
+    width: 30%;
+    color: black;
+    text-decoration: none;
+}
+.messageByUser a:visited{
+    color: black;
+}
+
 .messagediv{
     border: 1px solid black;
     margin: 2px;
-    width: 30%;
+
 }
 .messagediv h5{
     margin: 0px;

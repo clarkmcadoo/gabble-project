@@ -24,7 +24,9 @@
     <div class="allmessages">
         <div class="messagediv">        
             <h5>{{author.name}}</h5><br>{{content}}
-            <button>Like</button>
+        <form action="/like" method="post"><button>Like</button></form>
+            <h6>Likes:</h6>
+
         </div>
         {{#delete}}
         <form action="/delete" method="post">

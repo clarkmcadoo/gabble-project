@@ -21,19 +21,15 @@
         </form>
     </div>
         {{#messages}}
-    <div class="allmessages">
+        <div class="messageByUser">
+        <a href="/gab/{{id}}">
         <div class="messagediv">        
             <h5>{{author.name}}</h5><br>{{content}}
-            <button>Like</button>
+            <h6>Likes:</h6>
         </div>
-        {{#delete}}
-        <form action="/delete" method="post">
-            <button class="deletebutton" name="id" value={{id}}> Delete </button>
-        </form>
-        {{/delete}}
-        {{^delete}}
-        {{/delete}}
-    </div>
+        </a>
+        <form action="/like" method="post"><button name="likeclick" value={{id}}>Like</button></form>
+        </div>
         {{/messages}}
 
 </body>

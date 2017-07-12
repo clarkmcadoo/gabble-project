@@ -89,14 +89,14 @@ entryRoutes.post("/login", function(req, res){
     }
 
     var incomingUser = req.body;
-    console.log("incoming user",incomingUser);
+
 
     models.user.findOne({where:
     {username: incomingUser.username}})
     .then(function (visitingUser) {
         if(visitingUser.username === incomingUser.username && visitingUser.password === incomingUser.password){
             req.session.user = visitingUser;  
-            console.log(req.session.user);            
+    
             return res.redirect("home");
         }else{
             res.redirect("/");
@@ -112,6 +112,18 @@ entryRoutes.post("/creategab", (req, res) =>{
 
 
     res.redirect("home");
+
+})
+
+entryRoutes.post("/like", (req, res)=>{
+    // console.log("This is from the like click:",req.body.likeclick, "liker:", req.session.user.id);
+
+    var newLike = models.like.build({content: true, likerid: req.session.user.id, messageid: req.body.likeclick});
+    newLike.save().then(function(savedLike){
+        return res.redirect("home");        
+    })
+    .catch(function(err){res.status(500).send(err);})
+
 
 })
 
