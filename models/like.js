@@ -12,7 +12,8 @@ module.exports = function(sequelize, DataTypes) {
 
   like.associate = function(models){
   like.belongsTo(models.user, {as: "liker", foreignKey: "likerid" }),
-  like.belongsTo(models.message, {as: "message", foreignKey: "messageid"})
+  // like.belongsTo(models.message, {as: "message", foreignKey: "messageid"})
+  like.belongsTo(models.message, {as: "liked", foreignKey: "messageid"})
 };
 
   return like;

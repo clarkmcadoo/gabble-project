@@ -24,18 +24,20 @@
     <div class="allmessages">
         <div class="messagediv">        
             <h5>{{author.name}}</h5><br>{{content}}
-        <form action="/like" method="post"><button>Like</button></form>
-            <h6>Likes:</h6>
+                    <form action="/like" method="post"><button name="likeclick" value={{id}}>Like</button></form>
+            <h6>Likes:</h6>{{likes}}
 
         </div>
+        {{likers}}
         {{#delete}}
         <form action="/delete" method="post">
-            <button class="deletebutton" name="id" value={{id}}> Delete </button>
+            <button class="deletebutton" name="messageid" value={{id}}> Delete </button>
         </form>
         {{/delete}}
         {{^delete}}
         {{/delete}}
     </div>
+        {{likers}}
         {{/messages}}
 
 </body>
